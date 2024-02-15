@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dmn:definitions xmlns:dmn="http://www.omg.org/spec/DMN/20180521/MODEL/" xmlns="https://kiegroup.org/dmn/_EB5C8F23-46E2-40D1-AB79-D74003DCD81F" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:kie="http://www.drools.org/kie/dmn/1.2" xmlns:feel="http://www.omg.org/spec/DMN/20180521/FEEL/" xmlns:dmndi="http://www.omg.org/spec/DMN/20180521/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="_A10FB844-39E0-47DD-B1FA-5470AA65AC48" name="ConstrucciónBasamento" expressionLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/" typeLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/" namespace="https://kiegroup.org/dmn/_EB5C8F23-46E2-40D1-AB79-D74003DCD81F">
+  <dmn:extensionElements/>
+  <dmn:itemDefinition id="_C5923EB3-9F4C-436B-B75C-9EC11F6C4DE8" name="tPadron" isCollection="false">
+    <dmn:itemComponent id="_618DECDF-8C52-45FD-9EDB-CEEF148AE2F6" name="esFrentista" isCollection="false">
+      <dmn:typeRef>boolean</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_41175580-DB01-4CB8-B661-FAB6FF9006C2" name="anchoVia" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_423A5CED-DB11-4ED7-881D-3F55C63C58CE" name="alturaMaxima" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_01992599-B0C0-4266-A8AC-BC636B0DE345" name="tConstruccion" isCollection="false">
+    <dmn:itemComponent id="_B7DED12E-9BA8-48EB-AD1E-20286B64993E" name="retiroDesdePlanoFachada" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_A52C90E4-59D9-4357-8CC3-206E543D69ED" name="alturaConstruccion" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_B50CE07A-0DB4-4D5C-8796-EF9E3F8249EA" name="tieneBasamento" isCollection="false">
+      <dmn:typeRef>boolean</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_FA00C3DB-5679-4D7C-884F-860DB3C7DA72" name="alturaBasamento" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:inputData id="_10F34AC1-E96B-4CF4-9350-B3264947CFB9" name="construccion">
+    <dmn:extensionElements/>
+    <dmn:variable id="_0660488F-5F78-4DB5-8CE2-7D9B5BD5BB52" name="construccion" typeRef="tConstruccion"/>
+  </dmn:inputData>
+  <dmn:decision id="_300D2F64-23F5-49BD-9301-B21E6C912256" name="ConstruccionBasamento">
+    <dmn:extensionElements/>
+    <dmn:variable id="_5C0957E4-E98B-40EE-B0C3-DEAAD405AB59" name="ConstruccionBasamento" typeRef="boolean"/>
+    <dmn:informationRequirement id="_2D041CE3-C641-4A9D-A813-154DA1B48C09#_C0DD1923-41CE-4BCB-A8E5-ADF06C14A47F#_73F152D2-CAC2-4AD3-90FD-48F8D383FD62">
+      <dmn:requiredInput href="#_10F34AC1-E96B-4CF4-9350-B3264947CFB9"/>
+    </dmn:informationRequirement>
+    <dmn:informationRequirement id="_2D041CE3-C641-4A9D-A813-154DA1B48C09#_C0DD1923-41CE-4BCB-A8E5-ADF06C14A47F#_2980ADA0-705D-4F47-B1D5-00B2EADFEE9D">
+      <dmn:requiredInput href="#_C6FE5DE3-8E89-4600-9776-4637B009CB5F"/>
+    </dmn:informationRequirement>
+    <dmn:literalExpression id="_CE698B53-E5C3-4519-AD65-088CA1957C6F">
+      <dmn:text>padron.esFrentista and
+padron.anchoVia &lt;= 16 and
+construccion.alturaConstruccion &lt;= 27 and
+if construccion.tieneBasamento then
+  construccion.alturaBasamento = 7 or (construccion.alturaBasamento and construccion.retiroDesdePlanoFachada >= 4)
+else
+  false
+</dmn:text>
+    </dmn:literalExpression>
+  </dmn:decision>
+  <dmn:inputData id="_C6FE5DE3-8E89-4600-9776-4637B009CB5F" name="padron">
+    <dmn:extensionElements/>
+    <dmn:variable id="_B7E06C33-B8BC-4B43-A0BB-9FF548C54DF7" name="padron" typeRef="tPadron"/>
+  </dmn:inputData>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <di:extension>
+        <kie:ComponentsWidthsExtension>
+          <kie:ComponentWidths dmnElementRef="_CE698B53-E5C3-4519-AD65-088CA1957C6F">
+            <kie:width>647.0</kie:width>
+          </kie:ComponentWidths>
+        </kie:ComponentsWidthsExtension>
+      </di:extension>
+      <dmndi:DMNShape id="dmnshape-_300D2F64-23F5-49BD-9301-B21E6C912256" dmnElementRef="_300D2F64-23F5-49BD-9301-B21E6C912256" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="157.5" y="130" width="191" height="52"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_C6FE5DE3-8E89-4600-9776-4637B009CB5F" dmnElementRef="_C6FE5DE3-8E89-4600-9776-4637B009CB5F" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="272" y="250" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_10F34AC1-E96B-4CF4-9350-B3264947CFB9" dmnElementRef="_10F34AC1-E96B-4CF4-9350-B3264947CFB9" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="133" y="250" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="dmnedge-_2D041CE3-C641-4A9D-A813-154DA1B48C09#_C0DD1923-41CE-4BCB-A8E5-ADF06C14A47F#_73F152D2-CAC2-4AD3-90FD-48F8D383FD62" dmnElementRef="_2D041CE3-C641-4A9D-A813-154DA1B48C09#_C0DD1923-41CE-4BCB-A8E5-ADF06C14A47F#_73F152D2-CAC2-4AD3-90FD-48F8D383FD62">
+        <di:waypoint x="183" y="275"/>
+        <di:waypoint x="253" y="182"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-_2D041CE3-C641-4A9D-A813-154DA1B48C09#_C0DD1923-41CE-4BCB-A8E5-ADF06C14A47F#_2980ADA0-705D-4F47-B1D5-00B2EADFEE9D" dmnElementRef="_2D041CE3-C641-4A9D-A813-154DA1B48C09#_C0DD1923-41CE-4BCB-A8E5-ADF06C14A47F#_2980ADA0-705D-4F47-B1D5-00B2EADFEE9D">
+        <di:waypoint x="322" y="275"/>
+        <di:waypoint x="253" y="182"/>
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</dmn:definitions>
